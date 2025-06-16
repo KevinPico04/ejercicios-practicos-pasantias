@@ -1,0 +1,16 @@
+{
+  "welcome": "Welcome",
+  "products": "Products",
+  "add_product": "Add Product",
+  "product_name": "Product Name",
+  "product_price": "Price",
+  "take_photo": "Take Photo",
+  "save": "Save",
+  "language": "Language",
+  "english": "English",
+  "spanish": "Spanish",
+  "no_products": "No products available",
+  "fill_all_fields": "Please fill all fields",
+  "permission_denied": "Permission denied",
+  "camera_permission_message": "We need camera roll permissions to make this work!"
+}

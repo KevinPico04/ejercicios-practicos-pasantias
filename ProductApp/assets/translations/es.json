@@ -1,0 +1,17 @@
+{
+  "welcome": "Bienvenido",
+  "products": "Productos",
+  "add_product": "Agregar Producto",
+  "product_name": "Nombre del Producto",
+  "product_price": "Precio",
+  "take_photo": "Tomar Foto",
+  "save": "Guardar",
+  "language": "Idioma",
+  "english": "Inglés",
+  "spanish": "Español",
+  "no_products": "No hay productos disponibles",
+  "fill_all_fields": "Por favor complete todos los campos",
+  "permission_denied": "Permiso denegado",
+  "camera_permission_message": "¡Necesitamos permisos para acceder a tu galería de fotos!"
+
+}
