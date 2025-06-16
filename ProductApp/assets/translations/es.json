@@ -12,6 +12,19 @@
   "no_products": "No hay productos disponibles",
   "fill_all_fields": "Por favor complete todos los campos",
   "permission_denied": "Permiso denegado",
-  "camera_permission_message": "¡Necesitamos permisos para acceder a tu galería de fotos!"
+  "camera_permission_message": "¡Necesitamos permisos para acceder a tu galería de fotos!",
+  "choose_from_gallery": "Elegir desde galería",
+  "cancel": "Cancelar",
+  "change_image": "Cambiar imagen",
+  "add_image": "Agregar imagen",
+  "select_source": "Seleccionar fuente",
+  "choose_image_source": "Elige una fuente de imagen",
+  "gallery_error": "Hubo un error al acceder a la galería.",
+  "camera_error": "Hubo un error al usar la cámara.",
+  "permission_error": "Error al solicitar permisos",
+  "login": "Iniciar sesión",
+  "register": "Registrar",
+  "welcome": "Bienvenido",
+  "products": "Productos"
 
 }

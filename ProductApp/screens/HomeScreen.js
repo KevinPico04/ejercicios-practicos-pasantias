@@ -23,13 +23,14 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     padding: 20,
+    marginTop: 50, // Agrega espacio superior para que el Picker no esté oculto
+    alignItems: 'center',
   },
   title: {
     fontSize: 24,
     marginBottom: 20,
+    textAlign: 'center',
   },
 });
 

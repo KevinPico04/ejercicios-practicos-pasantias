@@ -23,8 +23,8 @@ const ProductForm = ({ onSubmit }) => {
       }
 
       Alert.alert(
-        translate('select_source'),
-        translate('choose_image_source'),
+        translate('select_source') || 'Seleccionar fuente',
+        translate('choose_image_source') || 'Elige de dónde obtener la imagen',
         [
           {
             text: translate('take_photo'),
@@ -37,19 +37,16 @@ const ProductForm = ({ onSubmit }) => {
                   quality: 1,
                 });
 
-                console.log('Camera result:', result);
-
                 if (!result.canceled && result.assets && result.assets.length > 0) {
                   setImage(result.assets[0].uri);
                 }
               } catch (error) {
-                console.error('Camera error:', error);
-                Alert.alert('Error', translate('camera_error'));
+                Alert.alert('Error', translate('camera_error') || 'Error con la cámara');
               }
             }
           },
           {
-            text: translate('choose_from_gallery'),
+            text: translate('choose_from_gallery') || 'Elegir de la galería',
             onPress: async () => {
               try {
                 const result = await ImagePicker.launchImageLibraryAsync({
@@ -59,14 +56,11 @@ const ProductForm = ({ onSubmit }) => {
                   quality: 1,
                 });
 
-                console.log('Gallery result:', result);
-
                 if (!result.canceled && result.assets && result.assets.length > 0) {
                   setImage(result.assets[0].uri);
                 }
               } catch (error) {
-                console.error('Gallery error:', error);
-                Alert.alert('Error', translate('gallery_error'));
+                Alert.alert('Error', translate('gallery_error') || 'Error con la galería');
               }
             }
           },
@@ -78,8 +72,7 @@ const ProductForm = ({ onSubmit }) => {
         { cancelable: true }
       );
     } catch (error) {
-      console.error('Permission error:', error);
-      Alert.alert('Error', translate('permission_error'));
+      Alert.alert('Error', translate('permission_error') || 'Error de permisos');
     }
   };
 
@@ -134,7 +127,9 @@ const ProductForm = ({ onSubmit }) => {
         />
       )}
 
-      <Button title={translate('save')} onPress={handleSubmit} />
+      <View style={styles.buttonSpacing}>
+        <Button title={translate('save')} onPress={handleSubmit} />
+      </View>
     </View>
   );
 };
@@ -177,6 +172,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     borderColor: '#eee',
+  },
+  buttonSpacing: {
+    marginTop: 15,
   },
 });
 

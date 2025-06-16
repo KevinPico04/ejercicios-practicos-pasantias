@@ -12,5 +12,19 @@
   "no_products": "No products available",
   "fill_all_fields": "Please fill all fields",
   "permission_denied": "Permission denied",
-  "camera_permission_message": "We need camera roll permissions to make this work!"
+  "camera_permission_message": "We need camera roll permissions to make this work!",
+  "choose_from_gallery": "Choose from Gallery",
+  "cancel": "Cancel",
+  "change_image": "Change Image",
+  "add_image": "Add Image",
+  "select_source": "Select Source",
+  "choose_image_source": "Choose an image source",
+  "gallery_error": "There was an error accessing the gallery.",
+  "camera_error": "There was an error using the camera.",
+  "permission_error": "Error requesting permissions",
+  "login": "Login",
+  "register": "Register",
+  "welcome": "Welcome",
+  "products": "Products"
+
 }
