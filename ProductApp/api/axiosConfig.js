@@ -1,8 +1,11 @@
 import axios from 'axios';
 
-const axiosInstance = axios.create({
-  baseURL: 'http://localhost:5000/api', // La URL base de tu backend
-  // Puedes agregar aquí headers por defecto, tiempo de espera, etc.
+// Usa la IP especial para el emulador Android y puerto correcto
+const instance = axios.create({
+  baseURL: 'http://192.168.100.198:4000/api', // Cambia si usas otro puerto
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
-export default axiosInstance;
+export default instance;

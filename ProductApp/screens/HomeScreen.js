@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, Button, StyleSheet, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import LanguageSelector from '../components/LanguageSelector';
 import { LanguageContext } from '../context/LanguageContext';
@@ -9,23 +9,28 @@ const HomeScreen = () => {
   const { translate } = useContext(LanguageContext);
 
   return (
-    <View style={styles.container}>
-      <LanguageSelector />
-      <Text style={styles.title}>{translate('welcome')}</Text>
-      <Button
-        title={translate('products')}
-        onPress={() => navigation.navigate('Products')}
-      />
-    </View>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        <LanguageSelector />
+        <Text style={styles.title}>{translate('welcome')}</Text>
+        <Button
+          title={translate('products')}
+          onPress={() => navigation.navigate('Products')}
+        />
+      </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     padding: 20,
-    marginTop: 50, // Agrega espacio superior para que el Picker no esté oculto
     alignItems: 'center',
+    justifyContent: 'center', // Centrar verticalmente
   },
   title: {
     fontSize: 24,

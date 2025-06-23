@@ -7,8 +7,8 @@ const ProductItem = ({ product }) => {
 
   return (
     <View style={styles.container}>
-      {product.image && (
-        <Image source={{ uri: product.image }} style={styles.image} />
+      {product.imageUrl && (
+        <Image source={{ uri: product.imageUrl }} style={styles.image} />
       )}
       <View style={styles.details}>
         <Text style={styles.name}>{product.name}</Text>

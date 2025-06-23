@@ -5,26 +5,32 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); // Para saber cuando termina de cargar
 
   const login = async (userData) => {
-    setUser(userData);
-    await AsyncStorage.setItem('user', JSON.stringify(userData));
+    try {
+      setUser(userData);
+      await AsyncStorage.setItem('user', JSON.stringify(userData));
+    } catch (error) {
+      console.error('Error saving user data', error);
+    }
   };
 
   const logout = async () => {
-    setUser(null);
-    await AsyncStorage.removeItem('user');
+    try {
+      setUser(null);
+      await AsyncStorage.removeItem('user');
+    } catch (error) {
+      console.error('Error removing user data', error);
+    }
   };
 
   const loadUser = async () => {
     try {
-      const storedUser = await AsyncStorage.getItem('user');
-      if (storedUser) {
-        setUser(JSON.parse(storedUser));
-      }
-    } catch (e) {
-      console.log('Error loading user from storage', e);
+      const stored = await AsyncStorage.getItem('user');
+      if (stored) setUser(JSON.parse(stored));
+    } catch (error) {
+      console.error('Error loading user data', error);
     } finally {
       setLoading(false);
     }

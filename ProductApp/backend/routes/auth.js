@@ -1,45 +1,49 @@
 const express = require('express');
-const router = express.Router();
-const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+const User = require('../models/User');
+
+const router = express.Router();
+const JWT_SECRET = process.env.JWT_SECRET;
 
 // Registro
 router.post('/register', async (req, res) => {
   const { username, password } = req.body;
-  try {
-    let user = await User.findOne({ username });
-    if (user) return res.status(400).json({ message: 'Usuario ya existe' });
+  if (!username || !password) return res.status(400).json({ message: 'Faltan datos' });
 
-    user = new User({ username, password });
+  try {
+    const existingUser = await User.findOne({ username });
+    if (existingUser) return res.status(400).json({ message: 'Usuario ya existe' });
+
+    const user = new User({ username, password });
     await user.save();
 
-    const payload = { user: { id: user.id } };
-    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1d' });
 
-    res.json({ token, user: { id: user.id, username: user.username } });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Error en el servidor');
+    res.status(201).json({ token, user: { id: user._id, username: user.username } });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error en servidor' });
   }
 });
 
 // Login
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;
+  if (!username || !password) return res.status(400).json({ message: 'Faltan datos' });
+
   try {
-    let user = await User.findOne({ username });
-    if (!user) return res.status(400).json({ message: 'Usuario no existe' });
+    const user = await User.findOne({ username });
+    if (!user) return res.status(400).json({ message: 'Usuario no encontrado' });
 
     const isMatch = await user.comparePassword(password);
     if (!isMatch) return res.status(400).json({ message: 'Contraseña incorrecta' });
 
-    const payload = { user: { id: user.id } };
-    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1d' });
 
-    res.json({ token, user: { id: user.id, username: user.username } });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Error en el servidor');
+    res.json({ token, user: { id: user._id, username: user.username } });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error en servidor' });
   }
 });
 

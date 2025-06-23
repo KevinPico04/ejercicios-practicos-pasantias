@@ -1,50 +1,78 @@
-import React, { useState } from 'react';
-import { View, TextInput, Button, Text, Alert } from 'react-native';
-import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useState, useContext } from 'react';
+import { View, TextInput, Button, Text, Alert, StyleSheet } from 'react-native';
+import axios from '../api/axiosConfig';
+import { AuthContext } from '../context/AuthContext';
+import { LanguageContext } from '../context/LanguageContext';
 
-export default function LoginScreen({ navigation, route }) {
-  const { onLogin } = route.params;
+export default function LoginScreen({ navigation }) {
+  const { login } = useContext(AuthContext);
+  const { translate } = useContext(LanguageContext);
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = async () => {
     if (!username || !password) {
-      Alert.alert('Error', 'Please fill all fields');
+      Alert.alert(translate('error'), translate('missing_data'));
       return;
     }
+
     try {
-      const response = await axios.post('http://TU_BACKEND/api/login', {
-        username,
-        password,
-      });
-      const userData = response.data;
-      await AsyncStorage.setItem('user', JSON.stringify(userData));
-      onLogin(userData);
-    } catch (error) {
-      Alert.alert('Error', 'Login failed');
+      const res = await axios.post('/login', { username, password });
+      await login(res.data);
+    } catch (err) {
+      Alert.alert(translate('error'), translate('login_failed'));
     }
   };
 
   return (
-    <View style={{ flex:1, justifyContent:'center', padding:20 }}>
-      <Text>Login</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>{translate('login')}</Text>
+
       <TextInput
-        placeholder="Username"
+        placeholder={translate('username')}
         value={username}
         onChangeText={setUsername}
+        style={styles.input}
         autoCapitalize="none"
-        style={{ borderWidth:1, marginBottom:10, padding:8 }}
       />
       <TextInput
-        placeholder="Password"
+        placeholder={translate('password')}
         value={password}
         onChangeText={setPassword}
         secureTextEntry
-        style={{ borderWidth:1, marginBottom:10, padding:8 }}
+        style={styles.input}
       />
-      <Button title="Login" onPress={handleLogin} />
-      <Button title="Go to Register" onPress={() => navigation.navigate('Register')} />
+
+      <Button title={translate('login')} onPress={handleLogin} />
+      <View style={styles.registerButton}>
+        <Button
+          title={translate('go_to_register')}
+          onPress={() => navigation.navigate('Register')}
+        />
+      </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex:1,
+    justifyContent: 'center',
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  input: {
+    borderWidth: 1,
+    marginBottom: 15,
+    padding: 10,
+    borderRadius: 5,
+  },
+  registerButton: {
+    marginTop: 10,
+  },
+});

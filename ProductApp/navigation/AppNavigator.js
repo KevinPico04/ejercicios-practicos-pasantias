@@ -1,25 +1,31 @@
 import React, { useContext } from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { LanguageContext } from '../context/LanguageContext';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { AuthContext } from '../context/AuthContext';
-
+import { LanguageContext } from '../context/LanguageContext';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import HomeScreen from '../screens/HomeScreen';
-import ProductsScreen from '../screens/ProductsScreen';
+import { ActivityIndicator, View, StyleSheet } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
-export default function AppNavigator() {
-  const { translate } = useContext(LanguageContext);
+const AppNavigator = () => {
   const { user, loading } = useContext(AuthContext);
+  const { translate } = useContext(LanguageContext);
 
-  if (loading) return null;
+  // Mostrar indicador de carga mientras se verifica el estado de autenticación
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={user ? 'Home' : 'Login'}>
+      <Stack.Navigator>
         {!user ? (
           <>
             <Stack.Screen
@@ -34,20 +40,23 @@ export default function AppNavigator() {
             />
           </>
         ) : (
-          <>
-            <Stack.Screen
-              name="Home"
-              component={HomeScreen}
-              options={{ title: translate('welcome') }}
-            />
-            <Stack.Screen
-              name="Products"
-              component={ProductsScreen}
-              options={{ title: translate('products') }}
-            />
-          </>
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{ title: translate('home') }}
+          />
         )}
       </Stack.Navigator>
     </NavigationContainer>
   );
-}
+};
+
+const styles = StyleSheet.create({
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
+
+export default AppNavigator;

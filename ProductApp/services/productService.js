@@ -1,7 +1,7 @@
 import axios from '../api/axiosConfig';
 
 export const fetchProducts = () => {
-  return axios.get('/products'); // Llama a http://localhost:5000/api/products
+  return axios.get('/products'); // 
 };
 
 export const createProduct = (productData) => {
